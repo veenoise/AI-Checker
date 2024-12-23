@@ -6,7 +6,6 @@ import { Progress } from "@/components/ui/progress"
 
 const InputCheck = () => {
   const [verdict, setVerdict] = useState<VerdictType | null>();
-  const [textInput, setTextInput] = useState<string>('');
   const [isCheckEnabled, setIsCheckEnabled] = useState(true);
   type VerdictType = {
     message: string,
@@ -14,14 +13,15 @@ const InputCheck = () => {
   }
 
   const detect = () => {
-    let ranVal = Math.random();
-    ranVal >= 0.8 ? 
-    setVerdict({"message":"AI Generated", "percent": (ranVal * 100)}) : 
-    setVerdict({"message":"Not AI Generated", "percent": (ranVal * 100)});
+    const ranVal = Math.random();
+    if (ranVal >= 0.8) {
+      setVerdict({"message":"AI Generated", "percent": (ranVal * 100)});
+    } else {
+      setVerdict({"message":"Not AI Generated", "percent": (ranVal * 100)});
+    }
   }
 
-  const setInput = (event:any) => {
-    setTextInput(event.target.value);
+  const setInput = (event:React.ChangeEvent<HTMLTextAreaElement>) => {
     if (event.target.value === "") {
       setIsCheckEnabled(true);
     } else {
